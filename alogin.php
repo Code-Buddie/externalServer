@@ -2,6 +2,7 @@
     $mac=$_POST['mac'];
     $ip=$_POST['ip'];
     $username=$_POST['username'];
+    $email = $_POST['email'];
     $linklogin=$_POST['link-login'];
     $linkorig=$_POST['link-orig'];
     $error=$_POST['error'];

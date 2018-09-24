@@ -25,7 +25,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mikrotik Hotspot | Logout</title>
+    <title>Mikrotik Hotspot | Session Status</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -33,6 +33,11 @@
     <link href="css/custom.css" rel="stylesheet">
 </head>
 <body>
+<?php
+    // echo "start";
+    phpinfo();
+    // $info = ob_get_clean();
+?>
 <div id="wrap">
     <div class="container">
         <div class="col-md-6 col-sm-12">        
@@ -40,8 +45,12 @@
                 <?php if($error) : ?>
                     <div class="alert alert-danger"><?php echo $error; ?></div>
                 <?php endif; ?>
-                <div class="alert alert-success">You have just logged out.</div>
-            </div>
+                <?php if($loginby == 'trial') : ?> 
+                    <div class="alert alert-info">Welcome trial user!</div>
+                <?php elseif($loginby != 'mac') : ?>    
+                    <div class="alert alert-info">Welcome <?php echo $username; ?>!</div>
+                <?php endif; ?>
+            </div>        
             <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -49,48 +58,37 @@
                         <table class="table table-striped">
                             <tbody>
                             <tr>
-                                <td>user name</td>
-                                <td><?php echo $username; ?></td>
-                            </tr>
-                            <tr>
-                                <td>IP address</td>
+                                <td>IP address:</td>
                                 <td><?php echo $ip; ?></td>
                             </tr>
                             <tr>
-                                <td>MAC address</td>
-                                <td><?php echo $mac; ?></td>
-                            </tr>
-                            <tr>
-                                <td>session time</td>
-                                <td><?php echo $uptime; ?></td>
-                            </tr>
-                            <?php if($sessiontimeleft) : ?>
-                                <tr>
-                                    <td>time left</td>
-                                    <td><?php echo $sessiontimeleft; ?></td>
-                                </tr>
-                            <?php endif; ?>
-                            <tr>
-                                <td>bytes up/down:</td>
+                                <td>bytes up/down</td>
                                 <td><?php echo $bytesinnice; ?> / <?php echo $bytesoutnice; ?></td>
                             </tr>
+                            <?php if($sessiontimeleft) : ?>
+                            <tr>
+                                <td>connected / left:</td>
+                                <td><?php echo $uptime; ?> / <?php echo $sessiontimeleft; ?></td>
+                            </tr>
+                            <?php else: ?>
+                            <tr>
+                                <td>connected:</td>
+                                <td><?php echo $uptime; ?></td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php if($refreshtimeout) : ?>
+                            <tr>
+                                <td>status refresh</td>
+                                <td><?php echo $refreshtimeout; ?></td>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>            
-        </div>
-        
+            </div>
+        </div>    
     </div>
-
-</div>
-
-<div id="footer">
-    <div class="container">
-        <p class="text-muted">Powered by Mikrotik</a></p>
-    </div>
-</div>
-
+</div>                    
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
