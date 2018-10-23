@@ -5,7 +5,7 @@ $error = $user = $pass = "";
 
 if (isset($_POST['user'])) {
     $user = ($_POST['user']);
-    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+    // $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
     $pass = sha1($_POST['pass']);
 
     if ($user == "" || $pass == "") {
