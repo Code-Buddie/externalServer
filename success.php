@@ -32,11 +32,7 @@
     <link href="css/custom.css" rel="stylesheet">
 </head>
 <body>
-<?php
-    // echo "start";
-    // phpinfo();
-    // $info = ob_get_clean();
-?>
+
 <div id="wrap">
     <div class="container">
         <div class="col-md-6 col-sm-12">        
