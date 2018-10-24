@@ -11,6 +11,11 @@ $linkloginonly = $_POST['link-login-only'];
 $linkorigesc = $_POST['link-orig-esc'];
 $macesc = $_POST['mac-esc'];
 
+
+if (is_null($linkloginonly)) {
+    header('Location:  admin.php');
+}
+
 ?>
 
 
