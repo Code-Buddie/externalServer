@@ -2,25 +2,35 @@
 require_once 'header.php';
 $error = $user = $pass = "";
 
-if (isset($_POST['user'])) {
-    $user = sanitizeString($_POST['user']);
-    $pass = sanitizeString($_POST['pass']);
+try {
 
-    if ($user == "" || $pass == "")
-        $error = "Not all fields were entered<br>";
-    else {
-        $result = queryMySQL("SELECT user,pass FROM admin
-        WHERE user='$user' AND pass='$pass'");
 
-        if ($result->num_rows == 0) {
-            $error = "<span class='error'>Username/Password
-                  invalid</span><br><br>";
+    if (isset($_POST['user'])) {
+        $user = ($_POST['user']);
+        $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+        $pass = sha1($_POST['pass']);
+
+        if ($user == "" || $pass == "") {
+            $error = "Not all fields were entered<br>";
         } else {
-            $_SESSION['user'] = $user;
-            $_SESSION['pass'] = $pass;
-            die(header('Location: members.php'));
+
+            $sql = "SELECT user,pass FROM `admin` WHERE user='$user' AND pass='$pass'";
+
+            $stmt = $connection->query($sql);
+            $row_count = $stmt->rowCount();
+
+            if ($row_count == 0) {
+                $error = "<span class='error'>Username/Password
+                  invalid</span>";
+            } else {
+                $_SESSION['user'] = $user;
+                $_SESSION['pass'] = $pass;
+                die(header('Location: members.php'));
+            }
         }
     }
+} catch (PDOException $error) {
+    echo $sql . "<br>" . $error->getMessage();
 }
 ?>
 

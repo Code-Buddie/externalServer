@@ -5,16 +5,19 @@ $error = $user = $pass = "";
 
 try {
 
+
     if (isset($_POST['user'])) {
         $user = ($_POST['user']);
-        // $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+         $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
         $pass = sha1($_POST['pass']);
 
         if ($user == "" || $pass == "") {
             $error = "Not all fields were entered<br>";
         } else {
 
-            $stmt = $connection->query("SELECT user,pass FROM `admin` WHERE user='$user' AND pass='$pass'");
+            $sql = "SELECT user,pass FROM `admin` WHERE user='$user' AND pass='$pass'";
+
+            $stmt = $connection->query($sql);
             $row_count = $stmt->rowCount();
 
             if ($row_count == 0) {
