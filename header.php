@@ -38,12 +38,10 @@ if (strpos($url, 'return') !== false) {
 
 ?>
 
-<?php // Example 26-2: header.php
+<?php
 session_start();
 
 echo "<!DOCTYPE html>\n<html><head>";
-
-// require_once 'functions.php';
 
 $userstr = ' Guest';
 

@@ -3,6 +3,8 @@ require_once './header.php';
 echo "<div class='container my-3'>";
 $error = $user = $pass = "";
 
+try {
+
 if (isset($_POST['user'])) {
     $user = ($_POST['user']);
     // $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
@@ -25,6 +27,9 @@ if (isset($_POST['user'])) {
         }
     }
 }
+} catch (PDOException $error) {
+    echo $sql . "<br>" . $error->getMessage();
+    
 // echo $pass;
 ?>
 <div class="container centered text-center">
