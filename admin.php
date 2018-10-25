@@ -1,14 +1,12 @@
 <?php // Example 26-7: login.php
 require_once './header.php';
-echo "<div class='container my-3'>";
+include('./navbar.php');
 $error = $user = $pass = "";
 
 try {
-
-
     if (isset($_POST['user'])) {
         $user = ($_POST['user']);
-         $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+        $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
         $pass = sha1($_POST['pass']);
 
         if ($user == "" || $pass == "") {

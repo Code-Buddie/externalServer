@@ -12,9 +12,9 @@ $linkorigesc = $_POST['link-orig-esc'];
 $macesc = $_POST['mac-esc'];
 
 
-if (is_null($linkloginonly)) {
+/* if (is_null($linkloginonly)) {
     header('Location:  admin.php');
-}
+} */
 
 ?>
 
@@ -94,8 +94,8 @@ if (is_null($linkloginonly)) {
                 <div id="automatedformContainer">
                     <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
                     <form id="automatedLoginForm" class="form-horizontal hidden" role="form" target="dummyframe" action="server/create.php" method="post">
-                    <input type="test" class="form-control input-lg" id="automatedName" name="automatedName" placeholder="name" required>
-                    <input type="text" class="form-control input-lg" id="automatedEmail" name="automatedEmail" placeholder="email" required>
+                    <input type="text" class="form-control input-lg" id="automatedName" name="automatedName" placeholder="name" required>
+                    <input type="email" class="form-control input-lg" id="automatedEmail" name="automatedEmail" placeholder="email" required>
                     <input type="text" class="form-control input-lg" id="automatedUsername" name="automatedUsername" placeholder="username" required>
                     <button type="submit" class="btn btn-primary btn-block btn-lg" id="automatedSubmitButton">OK</button>
                     </form>
