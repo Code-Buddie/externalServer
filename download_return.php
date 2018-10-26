@@ -3,13 +3,6 @@
 require "./config.php";
 $date = date('Ymd');
 $filename = "userInfo.returning.$date";
-
-try
-{
-    $connection = new PDO($dsn, $username, $password, $options);    
-} catch (PDOException $e) {
-    echo "ERROR : " . $e->getMessage();
-}
 ?>
 
 <?php

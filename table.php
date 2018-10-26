@@ -3,8 +3,6 @@
 require "./config.php";
 $sql = "SELECT email, name, date FROM `users` GROUP BY email";
 try {
-    $connection = new PDO($dsn, $username, $password, $options);
-
     $stmt = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->execute();
 } catch (PDOException $error) {

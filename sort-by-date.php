@@ -10,10 +10,8 @@ try {
         $filter = "WHERE date >= '$startDate' AND date < '$endDate'";
         $sql = "SELECT email, name, date FROM `users` $filter LIMIT 16 ";        
     }
-    $connection = new PDO($dsn, $username, $password, $options);
-
-        $stmt = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-        $stmt->execute();
+    $stmt = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $stmt->execute();
 
 } catch (PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();

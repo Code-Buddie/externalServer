@@ -2,8 +2,7 @@
 
 require "./config.php";
 
-try {
-    $connection = new PDO($dsn, $username, $password, $options);
+try {    
 
     $stmt = $connection->query("SELECT * FROM `users`");
     $row_count = $stmt->rowCount();
