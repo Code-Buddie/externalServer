@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
+    echo $sql . '<h1>'.$error->getMessage().'</h1>';
 }
 
 // echo $pass;
