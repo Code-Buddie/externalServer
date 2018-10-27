@@ -1,82 +1,100 @@
-<?php // Example 26-7: login.php
-require_once './header.php';
-include './navbar.php';
-$error = $user = $pass = "";
+<?php
+//include config
+require_once('portal/includes/config.php');
 
-try {
-    if (isset($_POST['user'])) {
-        $user = ($_POST['user']);
-        $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-        $pass = sha1($_POST['pass']);
+//check if already logged in move to home page
+if( $user->is_logged_in() ){ header('Location: reset.php'); exit(); }
 
-        if ($user == "" || $pass == "") {
-            $error = "Not all fields were entered<br>";
-        } else {
+//process login form if submitted
+if(isset($_POST['submit'])){
 
-            $sql = "SELECT user,pass FROM `admin` WHERE user='$user' AND pass='$pass'";
+	if (!isset($_POST['username'])) $error[] = "Please fill out all fields";
+	if (!isset($_POST['password'])) $error[] = "Please fill out all fields";
 
-            $stmt = $connection->query($sql);
-            $row_count = $stmt->rowCount();
+	$username = $_POST['username'];
+	if ( $user->isValidUsername($username)){
+		if (!isset($_POST['password'])){
+			$error[] = 'A password must be entered';
+		}
+		$password = $_POST['password'];
 
-            if ($row_count == 0) {
-                $error = "<span class='error'>Username/Password
-                  invalid</span>";
-            } else {
-                $_SESSION['user'] = $user;
-                $_SESSION['pass'] = $pass;
-                die(header('Location: members.php'));
-            }
-        }
-    }
-} catch (PDOException $error) {
-    echo $sql . '<h1>' . $error->getMessage() . '</h1>';
-}
+		if($user->login($username,$password)){
+			$_SESSION['username'] = $username;
+			header('Location: visitors.php');
+			exit;
 
-// echo $pass;
+		} else {
+			$error[] = 'Wrong username or password or your account has not been activated.';
+		}
+	}else{
+		$error[] = 'Usernames are required to be Alphanumeric, and between 3-16 characters long';
+	}
+
+
+
+}//end if submit
+
+//define page title
+$title = 'Login';
+
+//include header template
+require('layout/header.php'); 
 ?>
-<div class="container centered text-center">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <?php if ($error): ?>
-                <div class="alert alert-danger">
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
 
-            <div class="alert alert-info">Please log on to use the Admin service.</div>
+	
+<div class="container">
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form name="sendin" id="loginForm" class="form-horizontal" role="form" action="admin.php"
-                          method="post">
-                        <p class="lead">Ziwa hotspot Admin portal</p>
+	<div class="row">
 
-                        <div class="form-group">
-                            <label for="inputLogin" class="col-sm-2 control-label">Username</label>
+	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+			<form role="form" method="post" action="" autocomplete="off">
+				<h2>Please Login</h2>
+				<hr>
 
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control input-lg" id="inputLogin" name="user"
-                                       placeholder="Admin Username" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+				<?php
+				//check for any errors
+				if(isset($error)){
+					foreach($error as $error){
+						echo '<p class="bg-danger">'.$error.'</p>';
+					}
+				}
 
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control input-lg" id="inputPassword" name="pass"
-                                       placeholder="Password" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-block btn-lg">OK</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+				if(isset($_GET['action'])){
+
+					//check the action
+					switch ($_GET['action']) {
+						case 'active':
+							echo "<h2 class='bg-success'>Your account is now active you may now log in.</h2>";
+							break;
+						case 'reset':
+							echo "<h2 class='bg-success'>Please check your inbox for a reset link.</h2>";
+							break;
+						case 'resetAccount':
+							echo "<h2 class='bg-success'>Password changed, you may now login.</h2>";
+							break;
+					}
+
+				}
+
+				
+				?>
+
+				<div class="form-group">
+					<input type="text" name="username" id="username" class="form-control input-lg" placeholder="User Name" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" tabindex="1">
+				</div>
+
+				<div class="form-group">
+					<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="3">
+				</div>
+				
+				<hr>
+				<div class="row">
+					<div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Login" class="btn btn-primary btn-block btn-lg" tabindex="5"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
 </div>
-</body>
-</html>
