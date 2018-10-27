@@ -2,9 +2,6 @@
 //include config
 require_once('includes/config.php');
 
-//check if already logged in move to home page
-if( $user->is_logged_in() ){ header('Location: reset.php'); exit(); }
-
 //process login form if submitted
 if(isset($_POST['submit'])){
 
