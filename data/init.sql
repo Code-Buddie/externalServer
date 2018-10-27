@@ -23,12 +23,18 @@ CREATE TABLE returningUsers (
 );
 
 DROP TABLE IF EXISTS admin;
-CREATE TABLE admin (
-  user varchar(16)  DEFAULT NULL,
-  pass varchar(512) DEFAULT NULL,
-  KEY user (user(6))
-);
+CREATE TABLE `admin` (
+  `adminId` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `active` varchar(255) NOT NULL,
+  `resetToken` varchar(255) DEFAULT NULL,
+  `resetComplete` varchar(3) DEFAULT 'No',
+  PRIMARY KEY (`adminId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-INSERT INTO admin (user, pass)
-VALUES ('ziwa', '9e65cf7151d4c461a93ca9c227477bcd45515d84'),
-       ('admin', '9e65cf7151d4c461a93ca9c227477bcd45515d84');
+
+INSERT INTO `admin` (`adminId`, `username`, `password`, `email`, `active`, `resetToken`, `resetComplete`) VALUES
+(1, 'ziwa', '$2y$10$R1C3dmWAVITVsYIaKp0S7efudE5MiInelQczt.CsbmJBdczICKLna', 'ma@mail.com', 'Yes', NULL, 'No'),
+(2, 'admin', '$2y$10$R1C3dmWAVITVsYIaKp0S7efudE5MiInelQczt.CsbmJBdczICKLna', 'admin@ziwa.cc', 'Yes', NULL, 'No');
