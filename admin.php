@@ -1,6 +1,6 @@
 <?php // Example 26-7: login.php
 require_once './header.php';
-include('./navbar.php');
+include './navbar.php';
 $error = $user = $pass = "";
 
 try {
@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (PDOException $error) {
-    echo $sql . '<h1>'.$error->getMessage().'</h1>';
+    echo $sql . '<h1>' . $error->getMessage() . '</h1>';
 }
 
 // echo $pass;
