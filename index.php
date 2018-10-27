@@ -1,3 +1,4 @@
 <?php
-    header('Location:  portal/index.php');
+    // header('Location:  portal/index.php');
+    echo 'it works';
 ?>
